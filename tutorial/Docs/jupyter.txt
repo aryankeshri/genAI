@@ -1,0 +1,17 @@
+installation:-
+
+Run 'pip install notebook' to install Jupyter notebook, if not already installed.
+
+Run 'pip install ipykernel' to install ipykernel in this environment.
+
+Run 'python -m ipykernel install --user --name=<myenv>' where <myenv> is the name of the environment.
+
+Run Jupyter Notebook:-
+
+jupyter notebook
+
+Issue:-
+Issue1:- TypeError: ForwardRef._evaluate() missing 1 required keyword-only argument: 'recursive_guard'
+pip install --upgrade pydantic
+pip install --upgrade langchain_core
+pip install -U langchain-community

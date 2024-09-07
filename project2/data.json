@@ -1,0 +1,30 @@
+{
+  "query": "if we sell all extra small size Levi t-shirts today with discounts applied. How much revenue our store will generate(Post discount)?",
+  "result": "1184",
+  "intermediate_steps": [
+    {
+      "input": "if we sell all extra small size Levi t-shirts today with discounts applied. How much revenue our store will generate(Post discount)?\nSQLQuery:",
+      "top_k": "5",
+      "dialect": "sqlite",
+      "table_info": "\nCREATE TABLE discounts (\n\tdiscount_id INTEGER, \n\tt_shirt_id INTEGER NOT NULL, \n\tpct_discount DECIMAL(5, 2), \n\tPRIMARY KEY (discount_id), \n\tFOREIGN KEY(t_shirt_id) REFERENCES t_shirts (t_shirt_id), \n\tCHECK (pct_discount BETWEEN 0 AND 100)\n)\n\n/*\n3 rows from discounts table:\ndiscount_id\tt_shirt_id\tpct_discount\n1\t1\t10.00\n2\t2\t15.00\n3\t3\t20.00\n*/\n\n\nCREATE TABLE t_shirts (\n\tt_shirt_id INTEGER, \n\tbrand TEXT NOT NULL, \n\tcolor TEXT NOT NULL, \n\tsize TEXT NOT NULL, \n\tprice INTEGER, \n\tstock_quantity INTEGER NOT NULL, \n\tPRIMARY KEY (t_shirt_id), \n\tUNIQUE (brand, color, size), \n\tCHECK (brand IN ('Van Huesen','Levi','Adidas')), \n\tCHECK (color IN ('Red', 'Blue', 'Black', 'White')), \n\tCHECK (size IN ('XS', 'S', 'M', 'L', 'XL')), \n\tCHECK (price BETWEEN 10 AND 50)\n)\n\n/*\n3 rows from t_shirts table:\nt_shirt_id\tbrand\tcolor\tsize\tprice\tstock_quantity\n1\tVan Huesen\tWhite\tL\t33\t24\n3\tAdidas\tBlack\tM\t29\t43\n8\tLevi\tWhite\tXS\t13\t30\n*/",
+      "stop": [
+        "\nSQLResult:"
+      ]
+    },
+    "SELECT sum(a.total_amount * ((100-COALESCE(discounts.pct_discount,0))/100)) as total_revenue from (select sum(price*stock_quantity) as total_amount, t_shirt_id from t_shirts where brand = 'Levi' and size='XS' group by t_shirt_id) a left join discounts on a.t_shirt_id = discounts.t_shirt_id",
+    {
+      "sql_cmd": "SELECT sum(a.total_amount * ((100-COALESCE(discounts.pct_discount,0))/100)) as total_revenue from (select sum(price*stock_quantity) as total_amount, t_shirt_id from t_shirts where brand = 'Levi' and size='XS' group by t_shirt_id) a left join discounts on a.t_shirt_id = discounts.t_shirt_id"
+    },
+    "[(1184,)]",
+    {
+      "input": "if we sell all extra small size Levi t-shirts today with discounts applied. How much revenue our store will generate(Post discount)?\nSQLQuery:SELECT sum(a.total_amount * ((100-COALESCE(discounts.pct_discount,0))/100)) as total_revenue from (select sum(price*stock_quantity) as total_amount, t_shirt_id from t_shirts where brand = 'Levi' and size='XS' group by t_shirt_id) a left join discounts on a.t_shirt_id = discounts.t_shirt_id\nSQLResult: [(1184,)]\nAnswer:",
+      "top_k": "5",
+      "dialect": "sqlite",
+      "table_info": "\nCREATE TABLE discounts (\n\tdiscount_id INTEGER, \n\tt_shirt_id INTEGER NOT NULL, \n\tpct_discount DECIMAL(5, 2), \n\tPRIMARY KEY (discount_id), \n\tFOREIGN KEY(t_shirt_id) REFERENCES t_shirts (t_shirt_id), \n\tCHECK (pct_discount BETWEEN 0 AND 100)\n)\n\n/*\n3 rows from discounts table:\ndiscount_id\tt_shirt_id\tpct_discount\n1\t1\t10.00\n2\t2\t15.00\n3\t3\t20.00\n*/\n\n\nCREATE TABLE t_shirts (\n\tt_shirt_id INTEGER, \n\tbrand TEXT NOT NULL, \n\tcolor TEXT NOT NULL, \n\tsize TEXT NOT NULL, \n\tprice INTEGER, \n\tstock_quantity INTEGER NOT NULL, \n\tPRIMARY KEY (t_shirt_id), \n\tUNIQUE (brand, color, size), \n\tCHECK (brand IN ('Van Huesen','Levi','Adidas')), \n\tCHECK (color IN ('Red', 'Blue', 'Black', 'White')), \n\tCHECK (size IN ('XS', 'S', 'M', 'L', 'XL')), \n\tCHECK (price BETWEEN 10 AND 50)\n)\n\n/*\n3 rows from t_shirts table:\nt_shirt_id\tbrand\tcolor\tsize\tprice\tstock_quantity\n1\tVan Huesen\tWhite\tL\t33\t24\n3\tAdidas\tBlack\tM\t29\t43\n8\tLevi\tWhite\tXS\t13\t30\n*/",
+      "stop": [
+        "\nSQLResult:"
+      ]
+    },
+    "1184"
+  ]
+}
